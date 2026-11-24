@@ -83,5 +83,6 @@ dependencies {
 
 mavenPublishing {
     publishToMavenCentral(true)
-    signAllPublications()
+    // Hayaki publishes unsigned to its own Maven branch; see tools/publish-hayaki-maven.sh.
+    if (!project.hasProperty("hayakiUnsigned")) signAllPublications()
 }

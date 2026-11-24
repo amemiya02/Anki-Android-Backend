@@ -81,5 +81,6 @@ mavenPublishing {
     // Use https://central.sonatype.com/account with david-allison's GitHub login, not Google
     // the host should match rsdroid-testing
     publishToMavenCentral(true) // "true" means publish+release automatically+unattended
-    signAllPublications()
+    // Hayaki publishes unsigned to its own Maven branch; see tools/publish-hayaki-maven.sh.
+    if (!project.hasProperty("hayakiUnsigned")) signAllPublications()
 }

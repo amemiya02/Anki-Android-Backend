@@ -1,0 +1,92 @@
+# Builds the Hayaki Engine for every Android ABI and every Robolectric host, and
+# publishes it to this repository's `maven` branch (tools/publish-hayaki-maven.sh).
+name: Publish Hayaki Engine
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - hayaki-rwkv
+
+env:
+  ALL_ARCHS: 1
+  RELEASE: 1
+  CARGO_PROFILE_RELEASE_LTO: fat
+
+concurrency:
+  group: hayaki-maven
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: macos-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch submodules
+        run: git submodule update --init
+
+      - name: Read configured NDK version
+        run: |
+          cargo install toml-cli
+          ANDROID_NDK_VERSION=$(toml get gradle/libs.versions.toml versions.ndk --raw)
+          ANDROID_NDK_MAJOR_VERSION=$(echo $ANDROID_NDK_VERSION | cut -f1 -d.)
+          ANDROID_NDK_MINOR_VERSION=$(echo $ANDROID_NDK_VERSION | cut -f2 -d.)
+          ANDROID_NDK_MARKETING_VERSION="r${ANDROID_NDK_MAJOR_VERSION}"
+          if ! [ "$ANDROID_NDK_MINOR_VERSION" == "0" ]; then
+            alphabet="abcdefghijklmnopqrstuvwxyz"
+            ANDROID_NDK_MARKETING_VERSION="${ANDROID_NDK_MARKETING_VERSION}${alphabet:$ANDROID_NDK_MINOR_VERSION:1}"
+          fi
+          echo "ANDROID_NDK_VERSION=$ANDROID_NDK_VERSION" >> $GITHUB_ENV
+          echo "ANDROID_NDK_MARKETING_VERSION=$ANDROID_NDK_MARKETING_VERSION" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Setup Android NDK
+        uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: ${{ env.ANDROID_NDK_MARKETING_VERSION }}
+          add-to-path: false
+          link-to-sdk: true
+
+      - name: Set NDK version
+        run: |
+          ./.github/scripts/purge_ndk.sh ${ANDROID_NDK_VERSION}
+          export ANDROID_NDK_LATEST_HOME="${ANDROID_SDK_ROOT}/ndk/${ANDROID_NDK_VERSION}"
+          echo "ANDROID_NDK_HOME=$ANDROID_NDK_LATEST_HOME" >> $GITHUB_ENV
+          echo "ANDROID_NDK_ROOT=$ANDROID_NDK_LATEST_HOME" >> $GITHUB_ENV
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "21"
+
+      - name: Install cross compilers
+        run: |
+          brew install --quiet mingw-w64 MaterializeInc/crosstools/x86_64-unknown-linux-gnu
+          x86_64-w64-mingw32-gcc -v
+          x86_64-unknown-linux-gnu-gcc -v
+
+      - name: Setup N2
+        run: ./anki/tools/install-n2
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Build all
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 120
+          max_attempts: 2
+          retry_on: error
+          command: ./build.sh
+
+      - name: Publish to the maven branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          ./tools/publish-hayaki-maven.sh
