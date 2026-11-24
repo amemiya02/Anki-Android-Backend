@@ -22,7 +22,8 @@ permissions:
 
 jobs:
   publish:
-    runs-on: macos-latest
+    # arm64 macOS runners often wait for capacity; the Intel image builds the same outputs.
+    runs-on: macos-15-intel
     timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
