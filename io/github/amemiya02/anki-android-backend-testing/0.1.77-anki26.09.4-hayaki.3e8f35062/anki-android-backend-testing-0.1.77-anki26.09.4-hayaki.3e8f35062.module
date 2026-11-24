@@ -1,0 +1,93 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.github.amemiya02",
+    "module": "anki-android-backend-testing",
+    "version": "0.1.77-anki26.09.4-hayaki.3e8f35062",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.9.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 11,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "anki-android-backend-testing-0.1.77-anki26.09.4-hayaki.3e8f35062.jar",
+          "url": "anki-android-backend-testing-0.1.77-anki26.09.4-hayaki.3e8f35062.jar",
+          "size": 10409338,
+          "sha512": "421b84b4eadf7dec10934acd26bbf677c7325fffd4445b029e572478ed760262ee3b2d169a918e9c736ee48a46d096282f0c88d28761598347d23d14855756cb",
+          "sha256": "c10ec60e9c6a311cd098c29b465b589e96db1324380b1a33aa4d5a8b35128a0f",
+          "sha1": "875961452f012cf68af47b3203b7df8ebcfdedef",
+          "md5": "f7511579aa0bbba41cb261a0391de478"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 11,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "anki-android-backend-testing-0.1.77-anki26.09.4-hayaki.3e8f35062.jar",
+          "url": "anki-android-backend-testing-0.1.77-anki26.09.4-hayaki.3e8f35062.jar",
+          "size": 10409338,
+          "sha512": "421b84b4eadf7dec10934acd26bbf677c7325fffd4445b029e572478ed760262ee3b2d169a918e9c736ee48a46d096282f0c88d28761598347d23d14855756cb",
+          "sha256": "c10ec60e9c6a311cd098c29b465b589e96db1324380b1a33aa4d5a8b35128a0f",
+          "sha1": "875961452f012cf68af47b3203b7df8ebcfdedef",
+          "md5": "f7511579aa0bbba41cb261a0391de478"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "anki-android-backend-testing-0.1.77-anki26.09.4-hayaki.3e8f35062-sources.jar",
+          "url": "anki-android-backend-testing-0.1.77-anki26.09.4-hayaki.3e8f35062-sources.jar",
+          "size": 10401992,
+          "sha512": "28da66a464cc84ff03618b312a55b4c73b572e508aa23fe863d3ca4b01271543e37bcd237144e988a9e655318f877b5dd608901bce0157e1c2d28083145319e3",
+          "sha256": "51685299b56c6873cd071e0b9c66f4e318f4ffaaa169d37a397bbaf39c42e74a",
+          "sha1": "713647eaa8c370d487ff4b7f7e9099c5df53eb14",
+          "md5": "b419c7e13df9abdb6e689dc13ae52278"
+        }
+      ]
+    }
+  ]
+}

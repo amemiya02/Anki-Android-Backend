@@ -1,0 +1,151 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.github.amemiya02",
+    "module": "anki-backend-core",
+    "version": "0.1.77-anki26.09.4-hayaki.3e8f35062",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.9.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 11,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "com.google.protobuf",
+          "module": "protobuf-kotlin-lite",
+          "version": {
+            "requires": "4.36.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-serialization-json",
+          "version": {
+            "requires": "1.12.0"
+          }
+        },
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "anki-backend-core-0.1.77-anki26.09.4-hayaki.3e8f35062.jar",
+          "url": "anki-backend-core-0.1.77-anki26.09.4-hayaki.3e8f35062.jar",
+          "size": 4403211,
+          "sha512": "99ae11cb997e3c3aa92414369da28e08da54f6567c4d004bc743b7ddd71e227c4b3516dadd016950dc8b06cbd8363b735a02a3789ed6f595438f6c09145f724b",
+          "sha256": "5c5031a49314573e9ee1d7f6725fb3316f9ab4911903feddb2f73dcd0830ee56",
+          "sha1": "1555a56cc6410501a31f9bbe84420312f81282e9",
+          "md5": "9b846bfb373590e7c9310fe2caddbbac"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 11,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-api",
+          "version": {
+            "requires": "1.7.36"
+          }
+        },
+        {
+          "group": "com.google.protobuf",
+          "module": "protobuf-kotlin-lite",
+          "version": {
+            "requires": "4.36.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-serialization-json",
+          "version": {
+            "requires": "1.12.0"
+          }
+        },
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "anki-backend-core-0.1.77-anki26.09.4-hayaki.3e8f35062.jar",
+          "url": "anki-backend-core-0.1.77-anki26.09.4-hayaki.3e8f35062.jar",
+          "size": 4403211,
+          "sha512": "99ae11cb997e3c3aa92414369da28e08da54f6567c4d004bc743b7ddd71e227c4b3516dadd016950dc8b06cbd8363b735a02a3789ed6f595438f6c09145f724b",
+          "sha256": "5c5031a49314573e9ee1d7f6725fb3316f9ab4911903feddb2f73dcd0830ee56",
+          "sha1": "1555a56cc6410501a31f9bbe84420312f81282e9",
+          "md5": "9b846bfb373590e7c9310fe2caddbbac"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "anki-backend-core-0.1.77-anki26.09.4-hayaki.3e8f35062-sources.jar",
+          "url": "anki-backend-core-0.1.77-anki26.09.4-hayaki.3e8f35062-sources.jar",
+          "size": 1460660,
+          "sha512": "0626aedd9bbb88dba85ea15a1fcd3871c042ae841ad40cc5212a8dff54c8d2fada3711ad651ccdc57847fcdb57fc00d465e0548737de60e3af333c7cee127a8a",
+          "sha256": "fba0c8075bfa9ae908a82a342645a939dcd0e826df67a07bf88ebf296ef4262b",
+          "sha1": "d7497f5bc1af29a80f47b02fafa5464a7468e43a",
+          "md5": "b78dc1b6abd9de7edf0701269ab36d9d"
+        }
+      ]
+    }
+  ]
+}
