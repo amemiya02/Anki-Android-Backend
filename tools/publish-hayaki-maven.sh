@@ -34,12 +34,12 @@ else
 fi
 
 # maven-metadata-local.xml is only for Maven Local; the fixed versions need no metadata.
-(cd "$repo" && find io -type f ! -name 'maven-metadata-local.xml' -print0 | cpio -0pdmu --quiet "$site")
+rsync -a --exclude maven-metadata-local.xml "$repo/io" "$site/"
 git -C "$site" add -A io
 if git -C "$site" diff --cached --quiet; then
   echo "Nothing new to publish for $version"
 else
-  git -C "$site" commit -q -m "Publish Hayaki Engine $version"
+  git -C "$site" commit -q --no-verify -m "Publish Hayaki Engine $version"
   git -C "$site" push -q "$remote" HEAD:refs/heads/maven
   echo "Published $version"
 fi

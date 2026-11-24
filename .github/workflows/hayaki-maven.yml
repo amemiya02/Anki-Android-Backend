@@ -32,6 +32,19 @@ jobs:
       - name: Fetch submodules
         run: git submodule update --init
 
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+            anki/out/rust
+            anki/out/download
+            anki/out/extracted
+            anki/out/node_modules
+          key: hayaki-rust-${{ hashFiles('Cargo.lock', 'anki/Cargo.lock', 'anki/yarn.lock') }}
+          restore-keys: hayaki-rust-
+
       - name: Read configured NDK version
         run: |
           cargo install toml-cli
