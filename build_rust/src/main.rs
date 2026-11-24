@@ -254,7 +254,9 @@ fn build_robolectric_jni() -> Result<()> {
     }
     create_dir_all(jni_dir)?;
 
-    let all_archs = env::var("ALL_ARCHS").is_ok();
+    // Hayaki: ROBOLECTRIC_HOST_ONLY builds only the host library, so a Linux runner can
+    // publish every Android ABI without macOS cross compilers.
+    let all_archs = env::var("ALL_ARCHS").is_ok() && env::var("ROBOLECTRIC_HOST_ONLY").is_err();
     let (is_release, release_dir) = check_release(true);
     let target_root = Utf8Path::new("anki/out/rust");
     let file_in_target =

@@ -1,5 +1,8 @@
-# Builds the Hayaki Engine for every Android ABI and every Robolectric host, and
-# publishes it to this repository's `maven` branch (tools/publish-hayaki-maven.sh).
+# Builds the Hayaki Engine for every Android ABI, with the Robolectric library for
+# Linux, and publishes it to this repository's `maven` branch
+# (tools/publish-hayaki-maven.sh). Hayaki for Android's CI runs its unit tests on Linux,
+# so the testing JAR carries only the Linux host library; macOS runners are often
+# short of capacity and the Linux cross compiler has no Intel macOS build.
 name: Publish Hayaki Engine
 
 on:
@@ -11,6 +14,7 @@ on:
 env:
   ALL_ARCHS: 1
   RELEASE: 1
+  ROBOLECTRIC_HOST_ONLY: 1
   CARGO_PROFILE_RELEASE_LTO: fat
 
 concurrency:
@@ -22,16 +26,31 @@ permissions:
 
 jobs:
   publish:
-    # arm64 macOS runners often wait for capacity; the Intel image builds the same outputs.
-    runs-on: macos-15-intel
+    runs-on: ubuntu-latest
     timeout-minutes: 180
     steps:
+      - name: Liberate disk space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: false
+          dotnet: true
+          haskell: true
+          large-packages: false
+          docker-images: true
+          swap-storage: false
+
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Fetch submodules
         run: git submodule update --init
+
+      - name: Ubuntu packages
+        run: |
+          sudo apt update
+          sudo apt -y install liblzma-dev
 
       - uses: actions/cache@v4
         with:
@@ -43,8 +62,8 @@ jobs:
             anki/out/download
             anki/out/extracted
             anki/out/node_modules
-          key: hayaki-rust-${{ hashFiles('Cargo.lock', 'anki/Cargo.lock', 'anki/yarn.lock') }}
-          restore-keys: hayaki-rust-
+          key: hayaki-rust-linux-${{ hashFiles('Cargo.lock', 'anki/Cargo.lock', 'anki/yarn.lock') }}
+          restore-keys: hayaki-rust-linux-
 
       - name: Read configured NDK version
         run: |
@@ -70,7 +89,6 @@ jobs:
 
       - name: Set NDK version
         run: |
-          ./.github/scripts/purge_ndk.sh ${ANDROID_NDK_VERSION}
           export ANDROID_NDK_LATEST_HOME="${ANDROID_SDK_ROOT}/ndk/${ANDROID_NDK_VERSION}"
           echo "ANDROID_NDK_HOME=$ANDROID_NDK_LATEST_HOME" >> $GITHUB_ENV
           echo "ANDROID_NDK_ROOT=$ANDROID_NDK_LATEST_HOME" >> $GITHUB_ENV
@@ -80,14 +98,8 @@ jobs:
           distribution: "temurin"
           java-version: "21"
 
-      - name: Install cross compilers
-        run: |
-          brew install --quiet mingw-w64 MaterializeInc/crosstools/x86_64-unknown-linux-gnu
-          x86_64-w64-mingw32-gcc -v
-          x86_64-unknown-linux-gnu-gcc -v
-
       - name: Setup N2
-        run: ./anki/tools/install-n2
+        run: bash ./anki/tools/install-n2
 
       - uses: gradle/actions/setup-gradle@v4
 
@@ -97,7 +109,7 @@ jobs:
           timeout_minutes: 120
           max_attempts: 2
           retry_on: error
-          command: ./build.sh
+          command: cargo run -p build_rust
 
       - name: Publish to the maven branch
         run: |
